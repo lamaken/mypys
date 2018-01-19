@@ -14,8 +14,7 @@ height = 291
 
 width = int (height *  aureo)
 
-
-
+resources = "resources/"
 
 
 skysize 	= (width,int((height/ aureo)+1))
@@ -23,10 +22,10 @@ terrainsize = (width,int(height-(height/ aureo)))
 hrzsize		= (width,height)
 sunsize 	=  skysize
 
-sky 	= Image.open("sky.png").resize(skysize , Image.ANTIALIAS)
-terrain = Image.open("terrain.png").resize(terrainsize , Image.ANTIALIAS)
-hrzimg 	= Image.open("blanco.png").resize(hrzsize , Image.ANTIALIAS)
-sun	= Image.open("sun.png").resize(sunsize , Image.ANTIALIAS)
+sky 	= Image.open(resources+"sky.png").resize(skysize , Image.ANTIALIAS)
+terrain = Image.open(resources+"terrain.png").resize(terrainsize , Image.ANTIALIAS)
+hrzimg 	= Image.open(resources+"blanco.png").resize(hrzsize , Image.ANTIALIAS)
+sun	= Image.open(resources+"sun.png").resize(sunsize , Image.ANTIALIAS)
 
 tempimg=terrain.copy()
 
