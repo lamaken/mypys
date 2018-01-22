@@ -1,18 +1,9 @@
 # mypys
-Python experiments
+Improving hrzmkr using python
+First steps
 
-images
-	resources/
-
-hrzmkr.py
-	to generate image
 
 ![example](temp/out.png)
-
-
-hola 
-
-![Alt text](temp/out.png?raw=true "Title")
 
 
 
