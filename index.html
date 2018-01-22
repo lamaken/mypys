@@ -9,12 +9,27 @@
 	<meta name="author" content="lamaken@gmail.com">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<script type="text/javascript">	
+	function joe(){
+		var name="<center>";		
+		var img = document.getElementById('content');
+		for (n=1;n<2;n++){
+			name += "<img src=hrzmkr.py#"+n+"/>"; 
+		} 
+		img.innerHTML=name+"</center>";
+	}	
+</script>
+
 	
 </head>
 	<body>
 		<center>
-		<img src="hrzmkr.py"/>
-	</center>
+			<h1>HorizonMaker v0.1</h1>
+			<div id='content' onclick='joe()'>
+				<img src="hrzmkr.py"/>
+			</div>
+			<h2>with Python</h2>
+		</center>
 	</body>
 </html>
 

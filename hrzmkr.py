@@ -12,6 +12,8 @@ import PIL.Image as Image
 import PIL.ImageDraw as ImageDraw
 import PIL.ImageFont as ImageFont
 import random
+import uuid
+import os
 
 
 tempdir = "/var/www/html/temp/"      
@@ -120,16 +122,19 @@ def genImage():
 
       #ponemos etiqueta
       im = ImageDraw.Draw(hrzimg)
-      im.text(sunImgpos,"*","white")      
-      im.text(palrandompos,"|","white")
+      #im.text(sunImgpos,"*","white")      
+      #im.text(palrandompos,"|","white")
 
 
       #del im
       
-
-      hrzimg.save(tempdir+"out.png")
-      data = open(tempdir+"out.png", "rb").read()
-      hrzimg.show()
+     
+      filename=tempdir+str(uuid.uuid4())+".png"
+      print filename
+      
+      hrzimg.save(filename)
+      data = open(filename, "rb").read()
+      os.remove(filename)
 
       return data
 
@@ -140,7 +145,3 @@ def handler(req):
     req.write(data)
 
     return req.OK
-
-
-genImage()
-
