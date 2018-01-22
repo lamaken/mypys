@@ -20,6 +20,9 @@ def random_color():
       levels = range(10,150,10)
       return tuple(random.choice(levels) for _ in range(3))
 
+def random_pos(m,n):
+      r = random.choice(range(m,n))
+      return r 
 
 def genImage():
       #horitzontal
@@ -29,13 +32,13 @@ def genImage():
       aureo = param * 1.618033988
 
       # canvas size
-      height = 173
+      height = 637#random.choice((100,300,1))
       width = int (height *  aureo)
       skysize     = (width,int((height/ aureo)+1))
       terrainsize = (width,int(height-(height/ aureo)))
       hrzsize     = (width,height)
-      sunsize     =  (height,height)
-
+      sunsize     = (height,height)
+      
       # elemens
       #sky
       skypos = (0,0)
@@ -59,22 +62,30 @@ def genImage():
 
       #sun
       sunpos = (0,0)
-      sunImgpos = (0,0)
+      
+
+      sunpos2 = (int(-height/2.3),int(-height/2.3))
+      randomsunpos = (random_pos(0,width),random_pos(0,int((height/ aureo)+1)))
+      
+
+      sunImgpos = tuple(map(sum, zip(sunpos2,randomsunpos)))
+      print sunImgpos
+
       sunColor = random_color()
       sun = Image.open(resources+"sun.png").resize(sunsize , Image.ANTIALIAS)
       sunMasc = Image.new('RGBA', skysize,sunColor)
       sunImg = sun.resize(sunsize)
 
       #destination 
-      #hrzimg  = Image.open(resources+"blanco.png").resize(hrzsize , Image.ANTIALIAS)
-
-
       hrzimg = Image.new("RGBA",hrzsize,(0,0,0,255))
 
       #sombra pal pseudo ANTIALIAS
       sombrapal = Image.new("RGBA",hrzsize,(0,0,0,5))
       im = ImageDraw.Draw(sombrapal)
-      im.line((width/2+1,height*0.73,width*0.8,height*0.78),(0,0,0,225),3)
+      im.line((width/2+1,height*0.73,width*0.8,height*0.78),(0,0,0,225),5)
+
+     
+
       del im
       sombrapal=sombrapal.resize((width-(width/3),height-(height/3)),Image.ANTIALIAS)
       sombrapal=sombrapal.resize((width,height),Image.ANTIALIAS)
@@ -92,7 +103,15 @@ def genImage():
 
       #palo monolito vaya
       im = ImageDraw.Draw(hrzimg)
-      im.line((width/2, height*0.55,width/2,height*0.73),(180,180,180,255),2)
+
+
+      palrandompos = ( random_pos(10, width), int((height/ aureo)+1)+random_pos( 0 ,int(height-(height/ aureo)))) 
+      print palrandompos
+
+      im.line(palrandompos,(180,180,180,255),2)
+
+
+      im.line((width/2, height*0.55,width/2,height*0.73),(220,200,200,205),3)
       im.line((width/2+1, height*0.55,width/2+1,height*0.73),(0,0,0,205),2)
       del im
 
@@ -100,8 +119,11 @@ def genImage():
       hrzimg.paste(marc,marcpos,marc)
 
       #ponemos etiqueta
-      #im = ImageDraw.Draw(hrzimg)
-      #im.text((3,10),"Heollo","white")
+      im = ImageDraw.Draw(hrzimg)
+      im.text(sunImgpos,"*","white")      
+      im.text(palrandompos,"|","white")
+
+
       #del im
       
 
