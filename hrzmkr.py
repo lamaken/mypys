@@ -34,7 +34,7 @@ def genImage():
       aureo = param * 1.618033988
 
       # canvas size
-      height = 637#random.choice((100,300,1))
+      height = 337#random.choice((100,300,1))
       width = int (height *  aureo)
       skysize     = (width,int((height/ aureo)+1))
       terrainsize = (width,int(height-(height/ aureo)))
@@ -71,7 +71,6 @@ def genImage():
       
 
       sunImgpos = tuple(map(sum, zip(sunpos2,randomsunpos)))
-      print sunImgpos
 
       sunColor = random_color()
       sun = Image.open(resources+"sun.png").resize(sunsize , Image.ANTIALIAS)
@@ -81,16 +80,6 @@ def genImage():
       #destination 
       hrzimg = Image.new("RGBA",hrzsize,(0,0,0,255))
 
-      #sombra pal pseudo ANTIALIAS
-      sombrapal = Image.new("RGBA",hrzsize,(0,0,0,5))
-      im = ImageDraw.Draw(sombrapal)
-      im.line((width/2+1,height*0.73,width*0.8,height*0.78),(0,0,0,225),5)
-
-     
-
-      del im
-      sombrapal=sombrapal.resize((width-(width/3),height-(height/3)),Image.ANTIALIAS)
-      sombrapal=sombrapal.resize((width,height),Image.ANTIALIAS)
 
       sunMasc.paste(sunImg, sunImgpos, sunImg)
 
@@ -101,20 +90,30 @@ def genImage():
       skyImg.paste(sunImg,sunpos)
       hrzimg.paste(skyImg,skypos)
       hrzimg.paste(terrainImg,terrainpos,terrainImg)
-      hrzimg.paste(sombrapal,sunpos,sombrapal)
 
-      #palo monolito vaya
+      
+     
       im = ImageDraw.Draw(hrzimg)
 
 
+     
+
+      #monolito vaya
+      h = height-(height/ aureo)
+      tall=random_pos(int(h*0.5),int(h*0.9))
+
       palrandompos = ( random_pos(10, width), int((height/ aureo)+1)+random_pos( 0 ,int(height-(height/ aureo)))) 
-      print palrandompos
+      palpos = tuple(map(sum, zip((0,-tall),palrandompos)))
+      #bright
+      im.line((palrandompos,palpos),(200,200,200,200),2)
 
-      im.line(palrandompos,(180,180,180,255),2)
-
-
-      im.line((width/2, height*0.55,width/2,height*0.73),(220,200,200,205),3)
-      im.line((width/2+1, height*0.55,width/2+1,height*0.73),(0,0,0,205),2)
+      palpos = tuple(map(sum, zip((2,-tall),palrandompos)))
+      palrandompos = tuple(map(sum, zip((2,0),palrandompos)))
+      #hide
+      im.line((palpos,palrandompos),(0,0,0,250),2)
+      
+      #shadow
+      im.line((palrandompos,(width/3,height/2)),(0,0,0,225),5)
       del im
 
       #ponemos el marco
@@ -122,11 +121,11 @@ def genImage():
 
       #ponemos etiqueta
       im = ImageDraw.Draw(hrzimg)
-      #im.text(sunImgpos,"*","white")      
-      #im.text(palrandompos,"|","white")
+      im.text(sunImgpos,"*","white")      
+      im.text(palrandompos,"*","white")
 
 
-      #del im
+      del im
       
      
       filename=tempdir+str(uuid.uuid4())+".png"
@@ -145,3 +144,6 @@ def handler(req):
     req.write(data)
 
     return req.OK
+
+print "Only to handle http requests"
+
