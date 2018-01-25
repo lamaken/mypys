@@ -99,21 +99,33 @@ def genImage():
      
 
       #monolito vaya
-      h = height-(height/ aureo)
-      tall=random_pos(int(h*0.5),int(h*0.9))
+      
 
-      palrandompos = ( random_pos(10, width), int((height/ aureo)+1)+random_pos( 0 ,int(height-(height/ aureo)))) 
-      palpos = tuple(map(sum, zip((0,-tall),palrandompos)))
       #bright
+      h = height-(height/ aureo)
+      tall=int(h*0.5)
+
+      #default len
+      y=int((height/ aureo)+1)+random_pos( 0 ,int(height-(height/ aureo))-tall)
+      palrandompos = ( random_pos(10, width-10), y) 
+      
+      #change if far
+      tall = tall*(y/h)
+
+      
+
+      palpos = tuple(map(sum, zip((0,-tall),palrandompos)))
       im.line((palrandompos,palpos),(200,200,200,200),2)
 
+
+      #hide
       palpos = tuple(map(sum, zip((2,-tall),palrandompos)))
       palrandompos = tuple(map(sum, zip((2,0),palrandompos)))
-      #hide
       im.line((palpos,palrandompos),(0,0,0,250),2)
       
       #shadow
-      im.line((palrandompos,(width/3,height/2)),(0,0,0,225),5)
+      shadowpos = tuple(map(sum, zip((20,10),palrandompos)))
+      im.line( (palrandompos,shadowpos) , (0,0,0,225) , 5 )
       del im
 
       #ponemos el marco
@@ -123,8 +135,7 @@ def genImage():
       im = ImageDraw.Draw(hrzimg)
       im.text(sunImgpos,"*","white")      
       im.text(palrandompos,"*","white")
-
-
+      im.text((100,100),str(tall),"white")
       del im
       
      
