@@ -7,6 +7,8 @@
 
 # enable debugging
 
+#fer la classe log/debug
+
 
 import PIL.Image as Image
 import PIL.ImageDraw as ImageDraw
@@ -34,7 +36,7 @@ def genImage():
       aureo = param * 1.618033988
 
       # canvas size
-      height = 337#random.choice((100,300,1))
+      height = 333#random.choice((100,300,1))
       width = int (height *  aureo)
       skysize     = (width,int((height/ aureo)+1))
       terrainsize = (width,int(height-(height/ aureo)))
@@ -103,15 +105,16 @@ def genImage():
 
       #bright
       h = height-(height/ aureo)
-      tall=int(h*0.5)
-
+      tall=random_pos(1,int(h))
       #default len
       y=int((height/ aureo)+1)+random_pos( 0 ,int(height-(height/ aureo))-tall)
-      palrandompos = ( random_pos(10, width-10), y) 
+
+      
+      palrandompos = ( random_pos(0, width), y) 
       
       #change if far
-      tall = tall*(y/h)
-
+      #tall = (tall*h)  % (y/h)
+      
       
 
       palpos = tuple(map(sum, zip((0,-tall),palrandompos)))
@@ -133,9 +136,10 @@ def genImage():
 
       #ponemos etiqueta
       im = ImageDraw.Draw(hrzimg)
+      im.text((200,y),"y="+str(y),"white")
       im.text(sunImgpos,"*","white")      
       im.text(palrandompos,"*","white")
-      im.text((100,100),str(tall),"white")
+      im.text((100,100),"tall="+str(tall),"white")
       del im
       
      
