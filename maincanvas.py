@@ -16,7 +16,7 @@ class Canvas(object):
         self.file_name = canvas[CANVAS_FILE_NAME]
         self.alpha = canvas[CANVAS_ALPHA]
 
-        print("Canvas created.")
+        print('Canvas ', self.name, 'created')
 
 
 class MainCanvas(object):
@@ -30,8 +30,13 @@ class MainCanvas(object):
     def add(self, another_canvas):
         self.allCanvas.append(another_canvas)
 
-    def getimage(self):
-        return self
+    def draw_rect(self):
+        print("MainCanvas draw rect.")
+
+
+
+
+
 
 
 # -- canvas background
@@ -43,7 +48,6 @@ SUN_WIDTH = 640
 SUN_HEIGHT = 480
 
 SUN_SIZE = (SUN_WIDTH, SUN_HEIGHT)
-
 
 CANVAS_NAME = 0
 CANVAS_LEFT = 1
@@ -98,10 +102,29 @@ img_border = ("border",
               "marc.png",
               255,)
 
+# horizon line
+sky_height = border[BORDER_HEIGHT] / 2
+
+img_sky = ("sky",
+           border[BORDER_LEFT],
+           border[BORDER_TOP],
+           border[BORDER_WIDTH],
+           sky_height,
+           "sky.png",
+           255,)
+
+img_land = ("land",
+            border[BORDER_LEFT],
+            border[BORDER_HEIGHT] - sky_height,
+            border[BORDER_WIDTH],
+            border[BORDER_HEIGHT],
+            "land.png",
+            255,)
+
 
 img_sun = ("sun",
-           img_border[0],
-           img_border[1],
+           border[BORDER_LEFT],
+           border[BORDER_TOP],
            SUN_SIZE[0],
            SUN_SIZE[1],
            "sun.png",
@@ -110,6 +133,9 @@ img_sun = ("sun",
 main = MainCanvas(IMAGE_WIDTH, IMAGE_HEIGHT)
 main.add(Canvas(img_canvas))
 main.add(Canvas(img_padding))
+main.add(Canvas(img_border))
+main.add(Canvas(img_sky))
+main.add(Canvas(img_sun))
 
 print "1. canvas"
 print img_canvas
@@ -117,5 +143,12 @@ print "2. padding"
 print img_padding
 print "3. border"
 print img_border
-print "4. sun"
+print "4. sky"
+print img_sky
+print "5. land"
+print img_land
+print "6. sun"
 print img_sun
+
+
+main.draw_rect()
