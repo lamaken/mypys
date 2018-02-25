@@ -8,14 +8,27 @@ import uuid
 
 from PIL import Image, ImageDraw, ImageFont
 
-resources = "/var/www/html/resources/"
-output = "/var/www/html/temp/"
 
+
+
+resources = "/var/www/html/resources/"
+resources = "/home/alex/PycharmProjects/mypys/resources/"
+output = "/var/www/html/temp/"
 
 
 def random_color():
     levels = range(10, 250, 10)
     return tuple(random.choice(levels) for _ in range(3))
+
+
+def random_interval(start, end):
+    if start == end:
+        return start
+    if end<start:
+        result = random.choice(range(end,start))
+    else:
+        result = random.choice(range(start, end))
+    return result
 
 
 class Canvas(object):
@@ -28,6 +41,7 @@ class Canvas(object):
         self.height = canvas[CANVAS_HEIGHT]
         self.file_name = canvas[CANVAS_FILE_NAME]
         self.color = canvas[CANVAS_COLOR]
+        self.signature = self.name, self.left, self.top, self.width, self.height, self.file_name
 
         print('Canvas ', self.name, 'created')
 
@@ -39,7 +53,7 @@ class Canvas(object):
         img_size = (self.width - self.left, self.height - self.top)
         mask = Image.new('RGBA', img_size, self.color)
         image = Image.open(resources + self.file_name).resize(img_size, Image.ANTIALIAS)
-        canvas = Image.blend(mask, image, alpha=0.44)
+        canvas = Image.blend(mask, image, alpha=0.574)
         hrzimg.paste(canvas, (self.left, self.top), image)
 
     def draw_with_text(self, draw):
@@ -71,19 +85,35 @@ class MainCanvas(object):
             # self.allCanvas[index].draw_with_text(draw)
 
         im.save(self.get_filename())
+        im.show()
         del draw
         data = open(self.get_filename(), "rb").read()
         return data
 
     def add(self, another_canvas):
+        print "adding another canvas ... _ >> ", another_canvas.signature
         self.allCanvas.append(another_canvas)
 
 
 # H.M.T.
 # hand made tests
 
-IMAGE_WIDTH = 666
-IMAGE_HEIGHT = 333
+BESTIDOR_1_FIGURA = (22, 16)
+BESTIDOR_1_PAISATGE = (22, 14)
+BESTIDOR_1_MARINA = (22, 12)
+# ...
+BESTIDOR_1 = (BESTIDOR_1_FIGURA, BESTIDOR_1_PAISATGE, BESTIDOR_1_MARINA)
+
+IMAGE_WIDTH = BESTIDOR_1_PAISATGE[0] * 43
+IMAGE_HEIGHT = BESTIDOR_1_PAISATGE[1] * 43
+
+PAL_WIDTH = 19
+PAL_HEIGHT = int(IMAGE_HEIGHT/4.5)
+
+
+
+
+# FER UN TEST DE TAMANYS COMPROVAR QUE 100X100 POT SER SI PADING...
 
 CANVAS_NAME = 0
 CANVAS_LEFT = 1
@@ -94,7 +124,7 @@ CANVAS_FILE_NAME = 5
 CANVAS_COLOR = 6
 
 # -- padding
-PADDING_SIZE = (33, 33, 33, 33)
+PADDING_SIZE = (13, 13, 13, 13)
 
 PADDING_LEFT = 0
 PADDING_TOP = 1
@@ -116,79 +146,124 @@ sky_height = int(border[BORDER_HEIGHT] * 1 / 1.618033988)
 
 # SUN >*<
 
-SUN_WIDTH = 480
-SUN_HEIGHT = 480
+SUN_WIDTH = int(sky_height * 1.7145)
+SUN_HEIGHT = int(sky_height * 1.7145)
 
 SUN_SIZE = (SUN_WIDTH, SUN_HEIGHT)
 
-SUN_POSITION = (border[BORDER_WIDTH] / 2 - SUN_WIDTH / 2, border[BORDER_TOP] + sky_height / 2 - SUN_HEIGHT / 2)
+# def handler(req):
+img_sky = ("sky",
+           border[BORDER_LEFT],
+           border[BORDER_TOP],
+           border[BORDER_WIDTH],
+           border[BORDER_TOP] + sky_height,
+           "sky.png",
+           random_color(),)
+
+img_land = ("land",
+            border[BORDER_LEFT],
+            border[BORDER_TOP] + sky_height,
+            border[BORDER_WIDTH],
+            border[BORDER_HEIGHT],
+            "terrain.png",
+            random_color(),)
+
+img_shadow = ("shadow",
+              border[BORDER_LEFT],
+              border[BORDER_TOP] + sky_height,
+              border[BORDER_WIDTH],
+              border[BORDER_HEIGHT],
+              "shadow.png",
+              random_color(),)
+
+# SUN_POSITION = (border[BORDER_WIDTH] / 2 - SUN_WIDTH / 2, border[BORDER_TOP] + sky_height / 2 - SUN_HEIGHT / 2)
+
+
+SUN_POSITION = (0, 0)
+
+# SOL_RANDOM_LEFT = random_interval(border[BORDER_LEFT], border[BORDER_WIDTH])
+
+interval_1 = -SUN_WIDTH / 2 + border[BORDER_LEFT]
+interval_2 = border[BORDER_WIDTH] - SUN_WIDTH / 2
+
+print(interval_1, interval_2)
+
+SOL_RANDOM_LEFT = random_interval(interval_1, interval_2)
+
+
+interval_1 = border[BORDER_LEFT] + (IMAGE_WIDTH / 20)
+interval_2 = border[BORDER_WIDTH] - (IMAGE_WIDTH / 20)
+PAL_RANDOM_LEFT = random_interval(interval_1, interval_2)
+
+PAL_RANDOM_TOP1 = img_sky[4] - PAL_HEIGHT + 3 #random_interval(border[BORDER_TOP]+border[BORDER_HEIGHT]-sky_height , border[BORDER_TOP]+sky_height- (IMAGE_WIDTH / 20))
+PAL_RANDOM_TOP2 = border[BORDER_HEIGHT] - PAL_HEIGHT - (IMAGE_HEIGHT / 20)
+PAL_RANDOM_TOP = random_interval(PAL_RANDOM_TOP1, PAL_RANDOM_TOP2)
+
+SOL_RANDOM_TOP = 0
+
+img_sun = ("sun",
+           SOL_RANDOM_LEFT + SUN_POSITION[0],
+           SOL_RANDOM_TOP + SUN_POSITION[1],
+           SOL_RANDOM_LEFT + SUN_POSITION[0] + SUN_SIZE[0],
+           SOL_RANDOM_TOP + SUN_POSITION[1] + SUN_SIZE[1],
+           "sun.png",
+           "orange",)
+
+img_bara = ("bara",
+            PAL_RANDOM_LEFT,
+            PAL_RANDOM_TOP,
+            PAL_RANDOM_LEFT + PAL_WIDTH,
+            PAL_RANDOM_TOP + PAL_HEIGHT,
+            "poste.png",
+            "black",)
+
+# test noms repetits
+
+img_bara_shadow = ("shadow",
+                   img_bara[1]+5,
+                   img_bara[4]-5,
+                   img_bara[1]+400,
+                   img_bara[4]-1,
+                   "bara_shadow_hor.png",
+                   "black",)
+
+img_border = ("border",
+              border[BORDER_LEFT] - PADDING_LEFT,
+              border[BORDER_TOP],
+              border[BORDER_WIDTH],
+              border[BORDER_HEIGHT],
+              "border.png",
+              "gold")
+
+img_lienzo = ("lienzo",
+              border[BORDER_LEFT] - PADDING_LEFT,
+              border[BORDER_TOP],
+              border[BORDER_WIDTH],
+              border[BORDER_HEIGHT],
+              "lienzo.png",
+              (110,110,155,0))
+
+main = MainCanvas(IMAGE_WIDTH, IMAGE_HEIGHT)
+
+main.add(Canvas(img_sky))
+main.add(Canvas(img_sun))
+main.add(Canvas(img_shadow))
+main.add(Canvas(img_land))
+
+main.add(Canvas(img_bara_shadow))
+main.add(Canvas(img_bara))
+main.add(Canvas(img_lienzo))
+main.add(Canvas(img_border))
 
 
 
-def handler(req):
-    img_sky = ("sky",
-               border[BORDER_LEFT],
-               border[BORDER_TOP],
-               border[BORDER_WIDTH],
-               border[BORDER_TOP] + sky_height,
-               "sky.png",
-               random_color(),)
 
-    img_land = ("land",
-                border[BORDER_LEFT],
-                border[BORDER_TOP] + sky_height,
-                border[BORDER_WIDTH],
-                border[BORDER_HEIGHT],
-                "terrain.png",
-                random_color(),)
 
-    img_sun = ("sun",
-               SUN_POSITION[0],
-               SUN_POSITION[1],
-               SUN_POSITION[0] + SUN_SIZE[0],
-               SUN_POSITION[1] + SUN_SIZE[1],
-               "sun.png",
-               random_color(),)
-
-    img_bara = ("bara",
-                border[BORDER_WIDTH] - SUN_SIZE[1] / 2 - 5,
-                sky_height,
-                border[BORDER_WIDTH] - SUN_SIZE[1] / 2,
-                sky_height + sky_height / 4,
-                "bara.png",
-                random_color(),)
-
-    img_bara_shadow = ("shadow",
-                       img_bara[1],
-                       sky_height + sky_height / 4,
-                       img_bara[1] + 105,
-                       sky_height + sky_height / 2,
-                       "bara_shadow.png",
-                       "black",)
-
-    img_border = ("border",
-                  border[BORDER_LEFT],
-                  border[BORDER_TOP],
-                  border[BORDER_WIDTH],
-                  border[BORDER_HEIGHT],
-                  "border.png",
-                  "gold")
-
-    main = MainCanvas(IMAGE_WIDTH, IMAGE_HEIGHT)
-    main.add(Canvas(img_sky))
-    main.add(Canvas(img_land))
-    main.add(Canvas(img_sun))
-    main.add(Canvas(img_bara))
-    main.add(Canvas(img_bara_shadow))
-    main.add(Canvas(img_border))
-    data = main.draw_canvas()
+data = main.draw_canvas()
+""""
     req.content_type = "image/png"
     req.content_length = str(len(data))
     req.write(data)
 
     return req.OK
-
-
-
-
-
+"""""
