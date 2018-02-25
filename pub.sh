@@ -1,2 +1,3 @@
-cp maincanvas.py /var/www/html/hrzmkr.py
+cp maincanvas.py /var/www/html/hrznmkr.py
+cp resources /var/www/html/. -rf
 
