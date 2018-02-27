@@ -8,7 +8,6 @@ import uuid
 
 from PIL import Image, ImageDraw, ImageFont
 
-
 CANVAS_NAME = 0
 CANVAS_LEFT = 1
 CANVAS_TOP = 2
@@ -17,10 +16,9 @@ CANVAS_HEIGHT = 4
 CANVAS_FILE_NAME = 5
 CANVAS_COLOR = 6
 
-resources = "/home/alex/PycharmProjects/mypys/resources/"
-resources = "/var/www/html/resources/"
+resources = "/Users/lamaken/PycharmProjects/mypys/resources/"
+output = "/Users/lamaken/PycharmProjects/mypys/temp/"
 
-output = "/var/www/html/temp/"
 
 
 def random_color():
@@ -31,8 +29,8 @@ def random_color():
 def random_interval(start, end):
     if start == end:
         return start
-    if end<start:
-        result = random.choice(range(end,start))
+    if end < start:
+        result = random.choice(range(end, start))
     else:
         result = random.choice(range(start, end))
     return result
@@ -92,15 +90,15 @@ class MainCanvas(object):
             # self.allCanvas[index].draw_with_text(draw)
 
         im.save(self.get_filename())
-        im.show()
+        # im.show()
         del draw
+
         data = open(self.get_filename(), "rb").read()
-        return data
+        return data, self.get_filename()
 
     def add(self, another_canvas):
         print "adding another canvas ... _ >> ", another_canvas.signature
         self.allCanvas.append(another_canvas)
-
 
     # H.M.T.
     # hand made tests
@@ -113,22 +111,13 @@ def genIm():
     # ...
     BESTIDOR_1 = (BESTIDOR_1_FIGURA, BESTIDOR_1_PAISATGE, BESTIDOR_1_MARINA)
 
-
-
-    IMAGE_WIDTH = BESTIDOR_1_MARINA[0] * 57
-    IMAGE_HEIGHT = BESTIDOR_1_MARINA[1] * 57
-
-
+    IMAGE_WIDTH = BESTIDOR_1_MARINA[0] * 37
+    IMAGE_HEIGHT = BESTIDOR_1_MARINA[1] * 37
 
     PAL_WIDTH = 13
-    PAL_HEIGHT = int(IMAGE_HEIGHT/4.5)
-
-
-
+    PAL_HEIGHT = int(IMAGE_HEIGHT / 4.5)
 
     # FER UN TEST DE TAMANYS COMPROVAR QUE 100X100 POT SER SI PADING...
-
-
 
     # -- padding
     PADDING_SIZE = (13, 13, 13, 13)
@@ -149,7 +138,7 @@ def genIm():
               IMAGE_HEIGHT - PADDING_SIZE[PADDING_BOTTOM])
 
     # horizon line
-    sky_height = int(border[BORDER_HEIGHT]  / 1.3 )
+    sky_height = int(border[BORDER_HEIGHT] / 1.3)
 
     # SUN >*<
 
@@ -183,12 +172,12 @@ def genIm():
                   "shadow.png",
                   random_color(),)
 
-    # SUN_POSITION = (border[BORDER_WIDTH] / 2 - SUN_WIDTH / 2, border[BORDER_TOP] + sky_height / 2 - SUN_HEIGHT / 2)
+    # SUN_POSITION = (border[BORDER_WIDTH] / 2 - SUN_WIDTH / 2, )
 
+    interval_1 = int(border[BORDER_TOP] - SUN_SIZE[1] / 2.5)
+    interval_2 = border[BORDER_HEIGHT] - img_land[4] / 2 - SUN_SIZE[1] / 4
 
-    SUN_POSITION = (0, 0)
-
-    # SOL_RANDOM_LEFT = random_interval(border[BORDER_LEFT], border[BORDER_WIDTH])
+    SUN_POSITION = random_interval(interval_1, interval_2)
 
     interval_1 = -SUN_WIDTH / 2 + border[BORDER_LEFT]
     interval_2 = border[BORDER_WIDTH] - SUN_WIDTH / 2
@@ -197,23 +186,22 @@ def genIm():
 
     SOL_RANDOM_LEFT = random_interval(interval_1, interval_2)
 
-
     interval_1 = border[BORDER_LEFT] + (IMAGE_WIDTH / 20)
     interval_2 = border[BORDER_WIDTH] - (IMAGE_WIDTH / 20)
     PAL_RANDOM_LEFT = random_interval(interval_1, interval_2)
 
-    PAL_RANDOM_TOP1 = img_sky[4] - PAL_HEIGHT + 3 #random_interval(border[BORDER_TOP]+border[BORDER_HEIGHT]-sky_height , border[BORDER_TOP]+sky_height- (IMAGE_WIDTH / 20))
+    PAL_RANDOM_TOP1 = img_sky[4] - PAL_HEIGHT + 3
     PAL_RANDOM_TOP2 = border[BORDER_HEIGHT] - PAL_HEIGHT - (IMAGE_HEIGHT / 20)
     PAL_RANDOM_TOP = random_interval(PAL_RANDOM_TOP1, PAL_RANDOM_TOP2)
 
-    SOL_RANDOM_TOP = 0
+    SOL_RANDOM_TOP = SUN_POSITION
 
     img_sun = ("sun",
-               SOL_RANDOM_LEFT + SUN_POSITION[0],
-               SOL_RANDOM_TOP + SUN_POSITION[1],
-               SOL_RANDOM_LEFT + SUN_POSITION[0] + SUN_SIZE[0],
-               SOL_RANDOM_TOP + SUN_POSITION[1] + SUN_SIZE[1],
-               "sun.png",
+               SOL_RANDOM_LEFT,
+               SOL_RANDOM_TOP,
+               SOL_RANDOM_LEFT + SUN_SIZE[0],
+               SOL_RANDOM_TOP + SUN_SIZE[1],
+               "sun2.png",
                "orange",)
 
     img_bara = ("bara",
@@ -226,16 +214,15 @@ def genIm():
 
     # test noms repetits
 
-
-    if(img_bara[1]<SOL_RANDOM_LEFT + SUN_POSITION[0]+SUN_WIDTH/2):
+    if (img_bara[1] < SOL_RANDOM_LEFT + SUN_WIDTH / 2):
 
         img_bara_shadow = ("bara_shadow2",
                            border[BORDER_LEFT] + (IMAGE_WIDTH / 20),
-                        img_bara[4]-5,
-                        img_bara[1]+7,
-                        img_bara[4],
-                        "bara_shadow_hor.png",
-                        "black",)
+                           img_bara[4] - 5,
+                           img_bara[1] + 7,
+                           img_bara[4],
+                           "bara_shadow_hor.png",
+                           "black",)
     else:
         img_bara_shadow = ("bara_shadow1",
                            img_bara[1] + 5,
@@ -246,12 +233,12 @@ def genIm():
                            "black",)
 
     img_border = ("border",
-              border[BORDER_LEFT] - PADDING_LEFT,
-              border[BORDER_TOP],
-              border[BORDER_WIDTH],
-              border[BORDER_HEIGHT],
-              "border.png",
-              "gold")
+                  border[BORDER_LEFT] - PADDING_LEFT,
+                  border[BORDER_TOP],
+                  border[BORDER_WIDTH],
+                  border[BORDER_HEIGHT],
+                  "border.png",
+                  "gold")
 
     img_lienzo = ("lienzo",
                   border[BORDER_LEFT] - PADDING_LEFT,
@@ -259,7 +246,7 @@ def genIm():
                   border[BORDER_WIDTH],
                   border[BORDER_HEIGHT],
                   "lienzo.png",
-                  (155,155,155,5),)
+                  (155, 155, 155, 5),)
 
     main = MainCanvas(IMAGE_WIDTH, IMAGE_HEIGHT)
 
@@ -278,15 +265,14 @@ def genIm():
 
 def handler(req):
     data = genIm()
+    req.content_disposition = data[0]
     req.content_type = "image/png"
-    req.content_length = str(len(data))
+    req.content_length = str(len(data[1]))
     req.write(data)
 
     return req.OK
 
+
 print "Only to handle http requests"
-
-
-
 
 #data = genIm()
