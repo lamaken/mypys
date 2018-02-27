@@ -1,3 +1,3 @@
-cp hrznmkr.py /var/www/html/hrznmkr.py
-cp resources /var/www/html/. -rf
+scp hrznmkr.py alkasoft.org:/var/www/html/hrznmkr.py
+scp resources alkasoft.org:/var/www/html/. -rf 
 

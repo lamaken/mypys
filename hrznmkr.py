@@ -20,6 +20,9 @@ resources = "/Users/lamaken/PycharmProjects/mypys/resources/"
 output = "/Users/lamaken/PycharmProjects/mypys/temp/"
 
 
+resources = "/var/www/html/mypys/resources/"
+output = "/var/www/html/mypys/temp/"
+
 
 def random_color():
     levels = range(0, 255, 3)
@@ -265,10 +268,10 @@ def genIm():
 
 def handler(req):
     data = genIm()
-    req.content_disposition = data[0]
+    req.content_disposition = data[1]
     req.content_type = "image/png"
-    req.content_length = str(len(data[1]))
-    req.write(data)
+    req.content_length = str(len(data[0]))
+    req.write(data[0])
 
     return req.OK
 
