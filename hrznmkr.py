@@ -6,6 +6,7 @@
 import random
 import uuid
 
+import datetime
 from PIL import Image, ImageDraw, ImageFont
 
 CANVAS_NAME = 0
@@ -16,12 +17,12 @@ CANVAS_HEIGHT = 4
 CANVAS_FILE_NAME = 5
 CANVAS_COLOR = 6
 
-resources = "/Users/lamaken/PycharmProjects/mypys/resources/"
-output = "/Users/lamaken/PycharmProjects/mypys/temp/"
-
-
 resources = "/var/www/html/mypys/resources/"
 output = "/var/www/html/mypys/temp/"
+
+#ferhodinamic POSO NOM DEL L'ARXIU, DATA DE CREACIO
+#resources = "/Users/lamaken/PycharmProjects/mypys/resources/"
+#output = "/Users/lamaken/PycharmProjects/mypys/temp/"
 
 
 def random_color():
@@ -92,12 +93,18 @@ class MainCanvas(object):
             # self.allCanvas[index].draw_with_rectangles(draw)
             # self.allCanvas[index].draw_with_text(draw)
 
+        draw.text((self.width-97, self.height-13),"by hrznmkr ",fill=random_color())
+
+        mydate = datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p")
+
+        draw.text((10   , self.height - 13), mydate + " / http://alkasoft.org/mypys/temp/" + self.unik+".png",fill=random_color())
         im.save(self.get_filename())
         # im.show()
         del draw
 
-        data = open(self.get_filename(), "rb").read()
-        return data, self.get_filename()
+        img_data = open(self.get_filename(), "rb").read()
+
+        return img_data, 'attachment; filename=' + self.unik + '.png'
 
     def add(self, another_canvas):
         print "adding another canvas ... _ >> ", another_canvas.signature
@@ -189,8 +196,8 @@ def genIm():
 
     SOL_RANDOM_LEFT = random_interval(interval_1, interval_2)
 
-    interval_1 = border[BORDER_LEFT] + (IMAGE_WIDTH / 20)
-    interval_2 = border[BORDER_WIDTH] - (IMAGE_WIDTH / 20)
+    interval_1 = border[BORDER_LEFT] + (IMAGE_WIDTH / 15)
+    interval_2 = border[BORDER_WIDTH] - (IMAGE_WIDTH / 15)
     PAL_RANDOM_LEFT = random_interval(interval_1, interval_2)
 
     PAL_RANDOM_TOP1 = img_sky[4] - PAL_HEIGHT + 3
@@ -217,7 +224,7 @@ def genIm():
 
     # test noms repetits
 
-    if (img_bara[1] < SOL_RANDOM_LEFT + SUN_WIDTH / 2):
+    if img_bara[1] < SOL_RANDOM_LEFT + SUN_WIDTH / 2:
 
         img_bara_shadow = ("bara_shadow2",
                            border[BORDER_LEFT] + (IMAGE_WIDTH / 20),
@@ -251,31 +258,46 @@ def genIm():
                   "lienzo.png",
                   (155, 155, 155, 5),)
 
+    img_firma = ("firma",
+                  border[BORDER_WIDTH]-120,
+                  border[BORDER_HEIGHT]-50,
+                  border[BORDER_WIDTH]-50,
+                  border[BORDER_HEIGHT]-25,
+                  "firma.png",
+                  "black",)
+
+
+
     main = MainCanvas(IMAGE_WIDTH, IMAGE_HEIGHT)
 
     main.add(Canvas(img_sky))
     main.add(Canvas(img_sun))
+
     main.add(Canvas(img_shadow))
     main.add(Canvas(img_land))
 
     main.add(Canvas(img_bara_shadow))
     main.add(Canvas(img_bara))
+
+    main.add(Canvas(img_firma))
+
     main.add(Canvas(img_lienzo))
+
     main.add(Canvas(img_border))
 
     return main.draw_canvas()
 
 
 def handler(req):
-    data = genIm()
-    req.content_disposition = data[1]
+    returned_data = genIm()
+    req.content_disposition = returned_data[1]
     req.content_type = "image/png"
-    req.content_length = str(len(data[0]))
-    req.write(data[0])
-
+    req.content_length = str(len(returned_data[0]))
+    req.write(returned_data[0])
     return req.OK
 
 
 print "Only to handle http requests"
 
-#data = genIm()
+#hrzmkr_img = genIm()
+#print hrzmkr_img[1]
