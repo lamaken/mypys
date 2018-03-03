@@ -16,13 +16,17 @@ CANVAS_WIDTH = 3
 CANVAS_HEIGHT = 4
 CANVAS_FILE_NAME = 5
 CANVAS_COLOR = 6
-
-resources = "/var/www/html/mypys/resources/"
-output = "/var/www/html/mypys/temp/"
+#UBU
+resources = "/var/www/html/resources/"
+output = "/var/www/html/temp/"
 
 #ferhodinamic POSO NOM DEL L'ARXIU, DATA DE CREACIO
+#MAC
 #resources = "/Users/lamaken/PycharmProjects/mypys/resources/"
 #output = "/Users/lamaken/PycharmProjects/mypys/temp/"
+#PROD
+#resources = "/var/www/html/mypys/resources/"
+#output = "/var/www/html/mypys/temp/"
 
 
 def random_color():
@@ -93,18 +97,18 @@ class MainCanvas(object):
             # self.allCanvas[index].draw_with_rectangles(draw)
             # self.allCanvas[index].draw_with_text(draw)
 
-        draw.text((self.width-97, self.height-13),"by hrznmkr ",fill=random_color())
+        #draw.text((self.width-97, self.height-13),"by hrznmkr ",fill=random_color())
 
-        mydate = datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p")
+        #mydate = datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p")
 
-        draw.text((10   , self.height - 13), mydate + " / http://alkasoft.org/mypys/temp/" + self.unik+".png",fill=random_color())
+        #draw.text((10   , self.height - 13), mydate + " / http://alkasoft.org/mypys/temp/" + self.unik+".png",fill=random_color())
         im.save(self.get_filename())
-        # im.show()
+        im.show()
         del draw
 
         img_data = open(self.get_filename(), "rb").read()
 
-        return img_data, 'attachment; filename=' + self.unik + '.png'
+        return img_data, 'attachment; filename="' + self.unik + '.png"'
 
     def add(self, another_canvas):
         print "adding another canvas ... _ >> ", another_canvas.signature
@@ -115,13 +119,13 @@ class MainCanvas(object):
 
 
 def genIm():
-    BESTIDOR_1_FIGURA = (22, 16)
+    BESTIDOR_1_FIGURA = (12, 26)
     BESTIDOR_1_PAISATGE = (22, 14)
     BESTIDOR_1_MARINA = (22, 12)
     # ...
     BESTIDOR_1 = (BESTIDOR_1_FIGURA, BESTIDOR_1_PAISATGE, BESTIDOR_1_MARINA)
 
-    IMAGE_WIDTH = BESTIDOR_1_MARINA[0] * 37
+    IMAGE_WIDTH = BESTIDOR_1_MARINA[0] *   37
     IMAGE_HEIGHT = BESTIDOR_1_MARINA[1] * 37
 
     PAL_WIDTH = 13
@@ -260,9 +264,9 @@ def genIm():
 
     img_firma = ("firma",
                   border[BORDER_WIDTH]-120,
-                  border[BORDER_HEIGHT]-50,
+                  border[BORDER_HEIGHT]-80,
                   border[BORDER_WIDTH]-50,
-                  border[BORDER_HEIGHT]-25,
+                  border[BORDER_HEIGHT]-40,
                   "firma.png",
                   "black",)
 
@@ -290,7 +294,7 @@ def genIm():
 
 def handler(req):
     returned_data = genIm()
-    req.content_disposition = returned_data[1]
+    req.content_disposition = "attachment; filename=6ce7028b.png";# returned_data[1]
     req.content_type = "image/png"
     req.content_length = str(len(returned_data[0]))
     req.write(returned_data[0])
@@ -299,5 +303,5 @@ def handler(req):
 
 print "Only to handle http requests"
 
-#hrzmkr_img = genIm()
-#print hrzmkr_img[1]
+hrzmkr_img = genIm()
+print hrzmkr_img[1]
