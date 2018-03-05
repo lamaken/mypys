@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>List Horizons v0.1</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="List of self made horizons.">
+    <meta name="keywords"
+          content="hrznmkr, hrzmkr, visualk, shadow, alkasoft.org, tubsworld, horizon maker, paint, draw">
+    <meta name="author" content="lamaken@gmail.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+
+    <script>
+
+    page_num = 0
+    max_page = 1
+    images = []
+    bnext = "";
+    bprior = "";
+
+    function load(listimages){
+        images = listimages.split(",");
+        max_page = listimages.length;
+        showImage();
+    }
+
+    function next(){
+
+        page_num++;
+
+    }
+
+    function prior(){
+        page_num--;
+
+    }
+
+    function checkBoundaries(){
+        if(page_num>max_page){
+            page_num = max_page
+        }
+        if(page_num<0)page_num = 0
+    }
+    function showImage(){
+
+
+       bnext="<button onclick='next();checkBoundaries();showImage();'>next</button>";
+       bprior="<button onclick='prior();checkBoundaries();showImage();'>prior</button>";
+
+       if(page_num==max_page)bnext="";//end
+       if(page_num==0)bprior=""//start
+
+
+       document.getElementById('next').innerHTML=bnext;
+       document.getElementById('prior').innerHTML=bprior;
+
+
+       document.getElementById('title').innerHTML="<a href='"+images[page_num]+"'>"+images[page_num]+"</a>";
+       document.getElementById('myimg').src=images[page_num];
+    }
+
+    const http = new XMLHttpRequest()
+    http.open("GET", "hrznslist.py")
+    http.send()
+    http.onload = () => load(http.responseText)
+
+
+
+    </script>
+
+    <table align="center" border="1">
+        <tbody>
+        <td>
+            <td>
+            <div id="prior">
+
+            </div>
+        </td>
+        <td>
+            <img id='myimg'  style="width:70%" alt="loading.."/>
+        </td>
+        <td>
+            <div id="next">
+
+            </div>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+
+
+    <div id="title">no filename</div>
+
+
+    <br/>
+</center>
+</body>
+</html>
+
+
