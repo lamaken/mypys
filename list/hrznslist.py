@@ -1,11 +1,6 @@
 # /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# UBU
-
-resources = "/var/www/html/resources/"
-output = "/var/www/html/out/"
-webpath = "http://localhost/out/"
 # ferhodinamic POSO NOM DEL L'ARXIU, DATA DE CREACIO
 # MAC
 # resources = "/Users/lamaken/PycharmProjects/mypys/resources/"
@@ -13,10 +8,12 @@ webpath = "http://localhost/out/"
 # PROD
 # resources = "/var/www/html/mypys/resources/"
 # output = "/var/www/html/mypys/list/"
+from mod_python import apache
+import os
 
 
-
-import os, os.path
+output = "/var/www/html/out/"
+webpath = "http://localhost/out/"
 
 
 def list_images():
@@ -31,21 +28,16 @@ def list_images():
 
 
 def handler(req):
-    #returned_data = list_images()
-    returned_data = ("alex.png","josep.png")
-    req.content_type = "text/html"
+    returned_data = list_images()
+    req.content_type = "text/plain"
     out = ""
-
     if len(returned_data) == 0:
         out = "<center>No images have found!</center>"
     else:
         for i in returned_data:
-         out += i+","
-
-    req.content_length = str(len(out))
+            out += i + ","
     req.write(out)
-
-    return req.OK
-
+    return apache.OK
 
 
+print "Only to handle http requests"

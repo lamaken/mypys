@@ -9,8 +9,10 @@ import uuid
 import datetime
 
 #posar a la image dades per a poder generar la imatge de nou
-
 from PIL import Image, ImageDraw, ImageFont
+
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 CANVAS_NAME = 0
 CANVAS_LEFT = 1
@@ -31,6 +33,8 @@ output = "/var/www/html/out/"
 #resources = "/var/www/html/mypys/resources/"
 #output = "/var/www/html/mypys/list/"
 
+#resources = "/home/alex/PycharmProjects/mypys/resources/"
+#output = "/home/alex/PycharmProjects/mypys/out/"
 
 def random_color():
     levels = range(0, 255, 3)
@@ -83,7 +87,7 @@ class MainCanvas(object):
         self.unik = str(uuid.uuid4())[:8]
         self.height = h
         self.width = w
-        self.backcolor = "white"
+        self.backcolor = "black"
 
         print("MainCanvas start.")
 
@@ -121,14 +125,15 @@ class MainCanvas(object):
 
 
 def genIm():
+
     BESTIDOR_1_FIGURA = (22, 16,"F1")
     BESTIDOR_1_PAISATGE = (22, 14,"P1")
     BESTIDOR_1_MARINA = (22, 12,"M1")
     # ...
     BESTIDOR_1 = (BESTIDOR_1_FIGURA, BESTIDOR_1_PAISATGE, BESTIDOR_1_MARINA)
 
-    IMAGE_WIDTH = BESTIDOR_1_PAISATGE[0] *  40
-    IMAGE_HEIGHT = BESTIDOR_1_PAISATGE[1] * 40
+    IMAGE_WIDTH = BESTIDOR_1_MARINA[0] *  77
+    IMAGE_HEIGHT = BESTIDOR_1_MARINA[1] * 77
 
     PAL_WIDTH = random_interval(7,12)
     PAL_HEIGHT = int(IMAGE_HEIGHT / random_interval(5,10))
@@ -171,16 +176,28 @@ def genIm():
                border[BORDER_TOP],
                border[BORDER_WIDTH],
                border[BORDER_TOP] + sky_height,
-               "sky.png",
+               "sky2.png",
                random_color(),)
 
+
+#   img_land = ("land",
+#                border[BORDER_LEFT],
+#                border[BORDER_TOP] + sky_height,
+#                border[BORDER_WIDTH],
+#                border[BORDER_HEIGHT],
+#                "terrain.png",
+#                random_color(),)
+#
+
     img_land = ("land",
-                border[BORDER_LEFT],
-                border[BORDER_TOP] + sky_height,
-                border[BORDER_WIDTH],
-                border[BORDER_HEIGHT],
-                "terrain.png",
-                random_color(),)
+                    border[BORDER_LEFT],
+                    border[BORDER_TOP] + sky_height,
+                    border[BORDER_WIDTH],
+                    border[BORDER_HEIGHT],
+                    "sorra.png",
+                    random_color(),)
+
+
 
     img_shadow = ("shadow",
                   border[BORDER_LEFT],
@@ -238,8 +255,8 @@ def genIm():
                            border[BORDER_LEFT] + (IMAGE_WIDTH / 20),
                            img_bara[4] - 5,
                            img_bara[1] + 7,
-                           img_bara[4],
-                           "bara_shadow_hor.png",
+                           img_bara[4] + 5,
+                           "new_bara_shadow_hor.png",
                            "black",)
     else:
         img_bara_shadow = ("bara_shadow1",
@@ -284,6 +301,7 @@ def genIm():
     main.add(Canvas(img_sky))
     main.add(Canvas(img_sun))
 
+
     main.add(Canvas(img_shadow))
     main.add(Canvas(img_land))
 
@@ -291,11 +309,11 @@ def genIm():
 
 
     main.add(Canvas(img_firma))
-
-    main.add(Canvas(img_lienzo))
     main.add(Canvas(img_bara))
+    #main.add(Canvas(img_lienzo))
+    #
 
-    main.add(Canvas(img_border))
+    #main.add(Canvas(img_border))
 
     return main.draw_canvas()
 
