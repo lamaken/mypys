@@ -17,8 +17,8 @@ CANVAS_HEIGHT = 4
 CANVAS_FILE_NAME = 5
 CANVAS_COLOR = 6
 #UBU
-resources = "/var/www/html/resources/"
-output = "/var/www/html/temp/"
+resources = "/Users/lamaken/PycharmProjects/mypys/resources/"
+output = "/Users/lamaken/PycharmProjects/mypys/temp/"
 
 #ferhodinamic POSO NOM DEL L'ARXIU, DATA DE CREACIO
 #MAC
@@ -305,3 +305,16 @@ print "Only to handle http requests"
 
 hrzmkr_img = genIm()
 print hrzmkr_img[1]
+hrzmkr_img = genIm()
+print hrzmkr_img[1]
+hrzmkr_img = genIm()
+print hrzmkr_img[1]
+hrzmkr_img = genIm()
+print hrzmkr_img[1]
+hrzmkr_img = genIm()
+print hrzmkr_img[1]
+hrzmkr_img = genIm()
+print hrzmkr_img[1]
+hrzmkr_img = genIm()
+print hrzmkr_img[1]
+
