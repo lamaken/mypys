@@ -10,3 +10,5 @@ The script creates an virtual a painting that shows an horizon with a single pol
 
 
 by alk@soft.org
+
+-- develop --
