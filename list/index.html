@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="description" content="List of self made horizons.">
     <meta name="keywords"
-          content="hrznmkr, hrzmkr, visualk, shadow, alkasoft.org, tubsworld, horizon maker, paint, draw">
+          content="hrznsmkr, hrznmkr, hrzmkr, visualk, shadow, alkasoft.org, tubsworld, horizon maker, paint, draw">
     <meta name="author" content="lamaken@gmail.com">
 
     <!-- Required meta tags -->
@@ -18,15 +18,38 @@
 </head>
 <body>
 
-<!-- horizon maker list -->
+<!-- horizonslist -->
 
-<script>
+<script >
+
+    NUM_PER_WIDTH = 1;//num paints per row
 
     page_num = 0
     max_page = 1
+
     images = []
+    names=[]
+
     bnext = "";
     bprior = "";
+
+
+    function updateWidths(){
+        var perc=screen.width/(NUM_PER_WIDTH+1);
+        for(n=0;n<max_page;n++){
+            document.getElementById('id_'+n+'_uniq').width=perc;
+        }
+    }
+
+    function zoomIn(){
+        NUM_PER_WIDTH--;
+        if(NUM_PER_WIDTH<1)NUM_PER_WIDTH=1;
+    }
+
+    function zoomOut(){
+        NUM_PER_WIDTH++;
+        if(NUM_PER_WIDTH>max_page)NUM_PER_WIDTH=max_page;
+    }
 
     function load(listimages){
         images = listimages.split(",");
@@ -34,42 +57,14 @@
         showImage();
     }
 
-    function next(){
-
-        page_num++;
-
-    }
-
-    function prior(){
-        page_num--;
-
-    }
-
-    function checkBoundaries(){
-        if(page_num>max_page){
-            page_num = max_page
-        }
-        if(page_num<0)page_num = 0
-    }
     function showImage(){
+        document.getElementById('content').innerHTML="";
+        var perc=screen.width/(NUM_PER_WIDTH+1)
+        for(n=0;n<max_page;n++){
 
+            document.getElementById('content').innerHTML+="<a  download='"+images[n].substring(images[n].lastIndexOf('/')+1)+"' href='"+images[n]+"'><img id='id_"+n+"_uniq' src='"+images[n]+"'/>"+"</a>";
 
-       bnext="<button onclick='next();checkBoundaries();showImage();'>next</button>";
-       bprior="<button onclick='prior();checkBoundaries();showImage();'>prior</button>";
-
-       if(page_num==max_page)bnext="";//end
-       if(page_num==0)bprior=""//start
-
-
-       document.getElementById('next').innerHTML=bnext;
-       document.getElementById('prior').innerHTML=bprior;
-
-        document.getElementById('title').innerHTML="";
-        for(n=1;n<max_page;n++){
-            document.getElementById('title').innerHTML+="<a download='"+images[n].substring(images[n].lastIndexOf('/')+1)+"' href='"+images[n]+"'><img width='40%' src='"+images[n]+"'/>"+"</a>";
         }
-
-       document.getElementById('myimg').src=images[page_num];
 
 
     }
@@ -80,25 +75,23 @@
     http.onload = () => load(http.responseText)
 
 
+
+
 </script>
 
 
 <center>
+    <div id="header">
+    <button onclick="zoomIn();updateWidths();">+</button>
+    <button onclick="zoomOut();updateWidths();">-</button>
 
-<p>Here you can see all new horizons.</p>
-<p>Here you can see all new horizons.</p>
+    <p>Here you can see all new horizons.</p>
+    </div>
 
-<!--img id='myimgP' width="33%" alt="loading.."/-->
-<img id='myimg' width="60%" alt="loading.."/>
-<!--img id='myimgN' width="33%" alt="loading.."/-->
-<div id="prior"></div>
-
-<div id="title"></div>
-
-<div id="next"></div>
-
-
-<p>by hrznsmkr - 2018</p>
+    <div id="content"></div>
+    <div id="footer">
+    <p>by hrznsmkr - 2018</p>
+    </div>
 </center>
 </body>
 
