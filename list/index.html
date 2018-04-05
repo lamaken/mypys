@@ -64,10 +64,10 @@
        document.getElementById('next').innerHTML=bnext;
        document.getElementById('prior').innerHTML=bprior;
 
-
-       document.getElementById('title').innerHTML="<a href='"+images[page_num]+"'>"+images[page_num]+"</a>";
-
-
+        document.getElementById('title').innerHTML="";
+        for(n=1;n<max_page;n++){
+            document.getElementById('title').innerHTML+="<a download='"+images[n].substring(images[n].lastIndexOf('/')+1)+"' href='"+images[n]+"'><img width='40%' src='"+images[n]+"'/>"+"</a>";
+        }
 
        document.getElementById('myimg').src=images[page_num];
 
@@ -89,16 +89,16 @@
 <p>Here you can see all new horizons.</p>
 
 <!--img id='myimgP' width="33%" alt="loading.."/-->
-<img id='myimg' width="70%" alt="loading.."/-->
+<img id='myimg' width="60%" alt="loading.."/>
 <!--img id='myimgN' width="33%" alt="loading.."/-->
 <div id="prior"></div>
 
-<div id="title"><div>
+<div id="title"></div>
 
 <div id="next"></div>
 
 
-<p>by hrznsmkr, - 2018</p>
+<p>by hrznsmkr - 2018</p>
 </center>
 </body>
 

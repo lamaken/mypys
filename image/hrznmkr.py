@@ -187,8 +187,8 @@ def genIm():
 #                border[BORDER_HEIGHT],
 #                "terrain.png",
 #                random_color(),)
-#
 
+    #
     img_land = ("land",
                     border[BORDER_LEFT],
                     border[BORDER_TOP] + sky_height,
