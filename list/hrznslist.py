@@ -12,8 +12,8 @@ from mod_python import apache
 import os
 
 
-output = "/var/www/html/out/"
-webpath = "http://localhost/out/"
+output = "/var/www/html/mypys/out/"
+webpath = "http://localhost:8888/mypys/out/"
 
 
 def list_images():
@@ -34,8 +34,8 @@ def handler(req):
     if len(returned_data) == 0:
         out = "<center>No images have found!</center>"
     else:
-        for i in returned_data:
-            out += i + ","
+        for data in returned_data:
+            out += data + ","
     req.write(out)
     return apache.OK
 

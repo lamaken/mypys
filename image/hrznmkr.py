@@ -12,6 +12,7 @@ import datetime
 from PIL import Image, ImageDraw, ImageFont
 
 from PIL import ImageFile
+
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 CANVAS_NAME = 0
@@ -27,14 +28,16 @@ CANVAS_COLOR = 6
 
 #ferhodinamic POSO NOM DEL L'ARXIU, DATA DE CREACIO
 #MAC
-resources = "/Users/lamaken/PycharmProjects/mypys/resources/"
-output = "/Users/lamaken/PycharmProjects/mypys/list/"
+#resources = "/Users/lamaken/PycharmProjects/mypys/resources/"
+#output = "/Users/lamaken/PycharmProjects/mypys/list/"
 #PROD
 #resources = "/var/www/html/mypys/resources/"
 #output = "/var/www/html/mypys/list/"
 
-#resources = "/home/alex/PycharmProjects/mypys/resources/"
-#output = "/home/alex/PycharmProjects/mypys/out/"
+
+#docker
+resources = "/var/www/html/mypys/resources/"
+output = "/var/www/html/mypys/out/"
 
 def random_color():
     levels = range(0, 255, 3)
@@ -331,5 +334,3 @@ def handler(req):
 
 print "Only to handle http requests"
 
-hrzmkr_img = genIm()
-print hrzmkr_img[1]

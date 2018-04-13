@@ -1,7 +1,7 @@
 #mypys v0.1
 ###hrzmkr with python
 
-First steps in python to improve hrznmkr
+__First__ steps in python to improve **hrznmkr**
 
 
 The script creates an virtual a painting that shows an horizon with a single pole and its shadow.
