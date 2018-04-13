@@ -27,14 +27,14 @@ CANVAS_COLOR = 6
 
 #ferhodinamic POSO NOM DEL L'ARXIU, DATA DE CREACIO
 #MAC
-resources = "/Users/lamaken/PycharmProjects/mypys/resources/"
-output = "/Users/lamaken/PycharmProjects/mypys/list/"
+resources = "/var/www/html/mypys/resources/"
+output = "/var/www/html/mypys/out/"
 #PROD
 #resources = "/var/www/html/mypys/resources/"
 #output = "/var/www/html/mypys/list/"
 
 #resources = "/home/alex/PycharmProjects/mypys/resources/"
-#output = "/home/alex/PycharmProjects/mypys/out/"
+#output = "/hom/alex/PycharmProjects/mypys/out/"
 
 def random_color():
     levels = range(0, 255, 3)
