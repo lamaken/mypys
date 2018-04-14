@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
-cp -rf image /Users/lamaken/Desktop/docker/mypys/.
-cp -rf list /Users/lamaken/Desktop/docker/mypys/.
-cp -rf resources  /Users/lamaken/Desktop/docker/mypys/.
-cp index.html /Users/lamaken/Desktop/docker/mypys/index.html
-cd /Users/lamaken/Desktop/docker
-sh /Users/lamaken/Desktop/docker/update_launch.sh
+
+#GITSRCPATH="/Users/lamaken/Desktop/docker"
+GITSRCPATH="/Users/lamaken/work/src/docker-python-hrznmkr"
+
+
+cp -rf "image" "$GITSRCPATH/mypys/."
+cp -rf "list" "$GITSRCPATH/mypys/."
+cp -rf "resources"  "$GITSRCPATH/mypys/."
+cp index.html "$GITSRCPATH/mypys/index.html"
+cd "$GITSRCPATH"
+sh "$GITSRCPATH/help/update_launch.sh"
 
 
 
