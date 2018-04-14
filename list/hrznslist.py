@@ -32,7 +32,7 @@ def handler(req):
     req.content_type = "text/plain"
     out = ""
     if len(returned_data) == 0:
-        out = "<center><a href='"+webpath+"'>No images have found!<a/></center>"
+        out = webpath
     else:
         for i in returned_data:
             out += i + ","
