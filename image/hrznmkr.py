@@ -22,6 +22,7 @@ CANVAS_WIDTH = 3
 CANVAS_HEIGHT = 4
 CANVAS_FILE_NAME = 5
 CANVAS_COLOR = 6
+
 # UBU
 resources = "/var/www/html/resources/"
 # resources = "/home/alex/PycharmProjects/mypys/resources/"
@@ -38,6 +39,22 @@ output = "/var/www/html/out/"
 
 # resources = "/home/alex/PycharmProjects/mypys/resources/"
 # output = "/home/alex/PycharmProjects/mypys/out/"
+
+# UBU
+# resources = "/var/www/html/resources/"
+# output = "/var/www/html/out/"
+
+# ferhodinamic POSO NOM DEL L'ARXIU, DATA DE CREACIO
+# MAC
+# resources = "/var/www/html/mypys/resources/"
+# output = "/var/www/html/mypys/out/"
+# PROD
+# resources = "/var/www/html/mypys/resources/"
+# output = "/var/www/html/mypys/list/"
+
+# resources = "/home/alex/PycharmProjects/mypys/resources/"
+# output = "/hom/alex/PycharmProjects/mypys/out/"
+
 
 def random_color():
     levels = range(0, 255, 3)
@@ -120,8 +137,7 @@ class MainCanvas(object):
         return img_data, 'inline; filename="' + self.unik + '.png"'
 
     def add(self, another_canvas):
-        print
-        "adding another canvas ... _ >> ", another_canvas.signature
+        print("adding another canvas ... _ >> ", another_canvas.signature)
         self.allCanvas.append(another_canvas)
 
     # H.M.T.
@@ -135,8 +151,13 @@ def genIm():
     # ...
     BESTIDOR_1 = (BESTIDOR_1_FIGURA, BESTIDOR_1_PAISATGE, BESTIDOR_1_MARINA)
 
+    """
     IMAGE_WIDTH = BESTIDOR_1_MARINA[0] * 77
     IMAGE_HEIGHT = BESTIDOR_1_MARINA[1] * 77
+    """
+
+    IMAGE_WIDTH = BESTIDOR_1_MARINA[0] * 47
+    IMAGE_HEIGHT = BESTIDOR_1_MARINA[1] * 47
 
     PAL_WIDTH = random_interval(7, 12)
     PAL_HEIGHT = int(IMAGE_HEIGHT / random_interval(5, 10))
@@ -179,7 +200,7 @@ def genIm():
                border[BORDER_TOP],
                border[BORDER_WIDTH],
                border[BORDER_TOP] + sky_height,
-               "sky2.png",
+               "sky.png",
                random_color(),)
 
     #   img_land = ("land",
@@ -236,7 +257,7 @@ def genIm():
                SOL_RANDOM_TOP,
                SOL_RANDOM_LEFT + SUN_SIZE[0],
                SOL_RANDOM_TOP + SUN_SIZE[1],
-               "sun2.png",
+               "sun.png",
                random_color(),)
 
     img_bara = ("bara",
@@ -250,13 +271,12 @@ def genIm():
     # test noms repetits
 
     if img_bara[1] < SOL_RANDOM_LEFT + SUN_WIDTH / 2:
-
         img_bara_shadow = ("bara_shadow2",
                            border[BORDER_LEFT] + (IMAGE_WIDTH / 20),
                            img_bara[4] - 5,
                            img_bara[1] + 7,
                            img_bara[4] + 5,
-                           "new_bara_shadow_hor.png",
+                           "bara_shadow_hor.png",
                            "black",)
     else:
         img_bara_shadow = ("bara_shadow1",
@@ -310,6 +330,9 @@ def genIm():
     #
 
     # main.add(Canvas(img_border))
+    main.add(Canvas(img_lienzo))
+
+    main.add(Canvas(img_border))
 
     return main.draw_canvas()
 
@@ -325,8 +348,7 @@ def handler(req):
     return req.OK
 
 
-print
-"Only to handle http requests"
+print("Only to handle http requests")
 
 hrzmkr_img = genIm()
-# print hrzmkr_img[1]
+hrzmkr_img[1]

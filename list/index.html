@@ -22,7 +22,7 @@
 
 <script >
 
-    NUM_PER_WIDTH = 1;//num paints per row
+    NUM_PER_WIDTH = 5;//num paints per row
 
     page_num = 0
     max_page = 1
@@ -35,7 +35,7 @@
 
 
     function updateWidths(){
-        var perc=screen.width/(NUM_PER_WIDTH+1);
+        var perc=screen.width/(NUM_PER_WIDTH+5);
         for(n=0;n<max_page;n++){
             document.getElementById('id_'+n+'_uniq').width=perc;
         }
@@ -59,10 +59,10 @@
 
     function showImage(){
         document.getElementById('content').innerHTML="";
-        var perc=screen.width/(NUM_PER_WIDTH+1)
+        var perc=screen.width/(NUM_PER_WIDTH+5)
         for(n=0;n<max_page;n++){
 
-            document.getElementById('content').innerHTML+="<a  download='"+images[n].substring(images[n].lastIndexOf('/')+1)+"' href='"+images[n]+"'><img id='id_"+n+"_uniq' src='"+images[n]+"'/>"+"</a>";
+            document.getElementById('content').innerHTML+="<a  download='"+images[n].substring(images[n].lastIndexOf('/')+1)+"' href='"+images[n]+"'><img width='"+perc+"' id='id_"+n+"_uniq' src='"+images[n]+"'/>"+"</a>";
 
         }
 
@@ -91,6 +91,9 @@
     <div id="content"></div>
     <div id="footer">
     <p>by hrznsmkr - 2018</p>
+        <p>
+        <a href="javascript:back();">return</a>
+        </p>
     </div>
 </center>
 </body>

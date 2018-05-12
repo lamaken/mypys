@@ -8,11 +8,10 @@
 # PROD
 # resources = "/var/www/html/mypys/resources/"
 # output = "/var/www/html/mypys/list/"
-from mod_python import apache
+
 import os
 
-
-output = "/var/www/html/out/"
+output = "/var/www/html/mypys/out/"
 webpath = "http://localhost:8888/mypys/out/"
 
 
@@ -32,12 +31,12 @@ def handler(req):
     req.content_type = "text/plain"
     out = ""
     if len(returned_data) == 0:
-        out = "<center>No images have found!</center>"
+        out = "<center><a href='" + webpath + "'>No images have found!<a/></center>"
     else:
         for i in returned_data:
             out += i + ","
     req.write(out)
-    return apache.OK
+    return 200
 
 
-print "Only to handle http requests"
+print("Only to handle http requests")
