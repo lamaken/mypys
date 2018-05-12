@@ -8,10 +8,11 @@ import uuid
 
 import datetime
 
-#posar a la image dades per a poder generar la imatge de nou
+# posar a la image dades per a poder generar la imatge de nou
 from PIL import Image, ImageDraw, ImageFont
 
 from PIL import ImageFile
+
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 CANVAS_NAME = 0
@@ -21,20 +22,22 @@ CANVAS_WIDTH = 3
 CANVAS_HEIGHT = 4
 CANVAS_FILE_NAME = 5
 CANVAS_COLOR = 6
-#UBU
+# UBU
 resources = "/var/www/html/resources/"
+# resources = "/home/alex/PycharmProjects/mypys/resources/"
 output = "/var/www/html/out/"
 
-#ferhodinamic POSO NOM DEL L'ARXIU, DATA DE CREACIO
-#MAC
-#resources = "/Users/lamaken/PycharmProjects/mypys/resources/"
-#output = "/Users/lamaken/PycharmProjects/mypys/list/"
-#PROD
-#resources = "/var/www/html/mypys/resources/"
-#output = "/var/www/html/mypys/list/"
 
-#resources = "/home/alex/PycharmProjects/mypys/resources/"
-#output = "/home/alex/PycharmProjects/mypys/out/"
+# ferhodinamic POSO NOM DEL L'ARXIU, DATA DE CREACIO
+# MAC
+# resources = "/Users/lamaken/PycharmProjects/mypys/resources/"
+# output = "/Users/lamaken/PycharmProjects/mypys/list/"
+# PROD
+# resources = "/var/www/html/mypys/resources/"
+# output = "/var/www/html/mypys/list/"
+
+# resources = "/home/alex/PycharmProjects/mypys/resources/"
+# output = "/home/alex/PycharmProjects/mypys/out/"
 
 def random_color():
     levels = range(0, 255, 3)
@@ -101,14 +104,14 @@ class MainCanvas(object):
 
         for index in range(len(self.allCanvas)):
             self.allCanvas[index].draw_with_images(im)
-            #self.allCanvas[index].draw_with_rectangles(draw)
-            #self.allCanvas[index].draw_with_text(draw)
+            # self.allCanvas[index].draw_with_rectangles(draw)
+            # self.allCanvas[index].draw_with_text(draw)
 
-        #draw.text((self.width-97, self.height-13),"by hrznmkr ",fill=random_color())
+        # draw.text((self.width-97, self.height-13),"by hrznmkr ",fill=random_color())
 
-        mydate = datetime.datetime.now().strftime("%A, %d. %B %Y")# %I:%M%p")
-        draw.text((10, self.height - 13), mydate,fill=random_color())
-        #draw.text((10   , self.height - 13), mydate + " / http://alkasoft.org/mypys/temp/" + self.unik+".png",fill=random_color())
+        mydate = datetime.datetime.now().strftime("%A, %d. %B %Y")  # %I:%M%p")
+        draw.text((10, self.height - 13), mydate, fill=random_color())
+        # draw.text((10   , self.height - 13), mydate + " / http://alkasoft.org/mypys/temp/" + self.unik+".png",fill=random_color())
         im.save(self.get_filename())
         im.show()
         del draw
@@ -117,7 +120,8 @@ class MainCanvas(object):
         return img_data, 'inline; filename="' + self.unik + '.png"'
 
     def add(self, another_canvas):
-        print "adding another canvas ... _ >> ", another_canvas.signature
+        print
+        "adding another canvas ... _ >> ", another_canvas.signature
         self.allCanvas.append(another_canvas)
 
     # H.M.T.
@@ -125,18 +129,17 @@ class MainCanvas(object):
 
 
 def genIm():
-
-    BESTIDOR_1_FIGURA = (22, 16,"F1")
-    BESTIDOR_1_PAISATGE = (22, 14,"P1")
-    BESTIDOR_1_MARINA = (22, 12,"M1")
+    BESTIDOR_1_FIGURA = (22, 16, "F1")
+    BESTIDOR_1_PAISATGE = (22, 14, "P1")
+    BESTIDOR_1_MARINA = (22, 12, "M1")
     # ...
     BESTIDOR_1 = (BESTIDOR_1_FIGURA, BESTIDOR_1_PAISATGE, BESTIDOR_1_MARINA)
 
-    IMAGE_WIDTH = BESTIDOR_1_MARINA[0] *  77
+    IMAGE_WIDTH = BESTIDOR_1_MARINA[0] * 77
     IMAGE_HEIGHT = BESTIDOR_1_MARINA[1] * 77
 
-    PAL_WIDTH = random_interval(7,12)
-    PAL_HEIGHT = int(IMAGE_HEIGHT / random_interval(5,10))
+    PAL_WIDTH = random_interval(7, 12)
+    PAL_HEIGHT = int(IMAGE_HEIGHT / random_interval(5, 10))
 
     # FER UN TEST DE TAMANYS COMPROVAR QUE 100X100 POT SER SI PADING...
 
@@ -159,10 +162,10 @@ def genIm():
               IMAGE_HEIGHT - PADDING_SIZE[PADDING_BOTTOM])
 
     # horizon line
-    sky_height_top1 = int(border[BORDER_HEIGHT] / 1.3)-border[BORDER_HEIGHT]/4
+    sky_height_top1 = int(border[BORDER_HEIGHT] / 1.3) - border[BORDER_HEIGHT] / 4
     sky_height_top2 = int(border[BORDER_HEIGHT] / 1.3)
 
-    sky_height = random_interval(sky_height_top1,sky_height_top2)
+    sky_height = random_interval(sky_height_top1, sky_height_top2)
     # SUN >*<
 
     SUN_WIDTH = int(sky_height * 1.7145)
@@ -179,25 +182,22 @@ def genIm():
                "sky2.png",
                random_color(),)
 
-
-#   img_land = ("land",
-#                border[BORDER_LEFT],
-#                border[BORDER_TOP] + sky_height,
-#                border[BORDER_WIDTH],
-#                border[BORDER_HEIGHT],
-#                "terrain.png",
-#                random_color(),)
+    #   img_land = ("land",
+    #                border[BORDER_LEFT],
+    #                border[BORDER_TOP] + sky_height,
+    #                border[BORDER_WIDTH],
+    #                border[BORDER_HEIGHT],
+    #                "terrain.png",
+    #                random_color(),)
 
     #
     img_land = ("land",
-                    border[BORDER_LEFT],
-                    border[BORDER_TOP] + sky_height,
-                    border[BORDER_WIDTH],
-                    border[BORDER_HEIGHT],
-                    "sorra.png",
-                    random_color(),)
-
-
+                border[BORDER_LEFT],
+                border[BORDER_TOP] + sky_height,
+                border[BORDER_WIDTH],
+                border[BORDER_HEIGHT],
+                "sorra.png",
+                random_color(),)
 
     img_shadow = ("shadow",
                   border[BORDER_LEFT],
@@ -263,7 +263,7 @@ def genIm():
                            img_bara[1] + 5,
                            img_bara[4] - 3,
                            border[BORDER_WIDTH] - (IMAGE_WIDTH / 7),
-                           img_bara[4]+2,
+                           img_bara[4] + 2,
                            "bara_shadow_hor.png",
                            "black",)
 
@@ -283,37 +283,33 @@ def genIm():
                   "lienzo.png",
                   random_color(),)
 
-    firma_width= 45
+    firma_width = 45
     firma_height = 52
 
     img_firma = ("firma",
-                  border[BORDER_WIDTH]-border[BORDER_WIDTH]/20-firma_width,
-                  border[BORDER_HEIGHT]-border[BORDER_HEIGHT]/20-firma_height+25,
-                  border[BORDER_WIDTH]-border[BORDER_WIDTH]/20-firma_width+50,
-                  border[BORDER_HEIGHT]-border[BORDER_HEIGHT]/20-firma_height+50,
-                  "firma.png",
-                  random_color(),)
-
-
+                 border[BORDER_WIDTH] - border[BORDER_WIDTH] / 20 - firma_width,
+                 border[BORDER_HEIGHT] - border[BORDER_HEIGHT] / 20 - firma_height + 25,
+                 border[BORDER_WIDTH] - border[BORDER_WIDTH] / 20 - firma_width + 50,
+                 border[BORDER_HEIGHT] - border[BORDER_HEIGHT] / 20 - firma_height + 50,
+                 "firma.png",
+                 random_color(),)
 
     main = MainCanvas(IMAGE_WIDTH, IMAGE_HEIGHT)
 
     main.add(Canvas(img_sky))
     main.add(Canvas(img_sun))
 
-
     main.add(Canvas(img_shadow))
     main.add(Canvas(img_land))
 
     main.add(Canvas(img_bara_shadow))
 
-
     main.add(Canvas(img_firma))
     main.add(Canvas(img_bara))
-    #main.add(Canvas(img_lienzo))
+    # main.add(Canvas(img_lienzo))
     #
 
-    #main.add(Canvas(img_border))
+    # main.add(Canvas(img_border))
 
     return main.draw_canvas()
 
@@ -324,12 +320,13 @@ def handler(req):
     req.content_type = "image/png"
     req.content_length = str(len(returned_data[0]))
     req.write(returned_data[0])
-    req.headers_out['content-disposition']=returned_data[1]
+    req.headers_out['content-disposition'] = returned_data[1]
 
     return req.OK
 
 
-print "Only to handle http requests"
+print
+"Only to handle http requests"
 
-#hrzmkr_img = genIm()
-#print hrzmkr_img[1]
+hrzmkr_img = genIm()
+# print hrzmkr_img[1]
