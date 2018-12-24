@@ -1,14 +1,14 @@
-# mypys - hrzmkr with python
+#mypys v0.1
+###hrzmkr with python
+
+__First__ steps in python to improve **hrznmkr**
 
 
-first steps in python to improve hrzmkr
+The script creates an virtual a painting that shows an horizon with a single pole and its shadow.
+
+![example](http://alkasoft.org/mypys/temp/faec19d3.png "hrznmkr")
 
 
-![example](list/out.png)
+by alk@soft.org
 
-
-The script creates an image simulating a painting on a horizon with a single pole and its shadow.
-
-
-
-by alkasoft.org
+-- develop --
