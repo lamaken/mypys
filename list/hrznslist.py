@@ -13,7 +13,7 @@ import os
 
 
 output = "/var/www/html/mypys/out/"
-webpath = "http://localhost:8888/mypys/out/"
+webpath = "https://alkasoft.org/mypys/out/"
 
 
 def list_images():
